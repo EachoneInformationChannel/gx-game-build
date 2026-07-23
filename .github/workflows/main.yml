@@ -1,0 +1,18 @@
+name: Build WebGL
+
+on: [push]
+
+jobs:
+  build:
+    name: Build for WebGL
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build WebGL
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          targetPlatform: WebGL
