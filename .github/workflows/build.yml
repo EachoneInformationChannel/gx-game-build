@@ -1,26 +1,8 @@
-name: Build Project
-
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
-jobs:
-  build:
-    name: Build for WebGL
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      - name: Build project
-        uses: game-ci/unity-builder@v4
-        env:
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-          UNITY_EMAIL: ${{ eicshorts@gmail.com }}
-          UNITY_PASSWORD: ${{ Eicshorts123@@@ }}
-        with:
-          targetPlatform: WebGL
+- name: Unity Builder
+  uses: game-ci/unity-builder@v4
+  env:
+    UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+    UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+    UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+  with:
+    targetPlatform: WebGL
