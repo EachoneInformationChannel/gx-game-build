@@ -7,13 +7,14 @@ jobs:
   generate-alf:
     runs-on: ubuntu-latest
     steps:
-      - name: Create ALF File
-        run: |
-          mkdir -p alf_folder
-          echo '<?xml version="1.0" encoding="UTF-8"?><LicenseRequest><DeveloperData Value=""/><ClientData Value=""/></LicenseRequest>' > alf_folder/Unity_v2022.x.alf
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Request License File
+        uses: game-ci/unity-request-activation-file@v2
 
       - name: Upload ALF Artifact
         uses: actions/upload-artifact@v4
         with:
           name: manual-activation-file
-          path: alf_folder/Unity_v2022.x.alf
+          path: ./*.alf
