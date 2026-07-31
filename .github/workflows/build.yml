@@ -11,13 +11,11 @@ jobs:
     name: Build for WebGL 🎮
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           lfs: true
 
-      # Step 2: Cache Library folder to speed up builds
       - name: Cache Library
         uses: actions/cache@v4
         with:
@@ -26,18 +24,13 @@ jobs:
           restore-keys: |
             Library-${{ runner.os }}-
 
-      # Step 3: Run Unity WebGL Build
       - name: Unity Builder
         uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: WebGL
 
-      # Step 4: Upload Built WebGL Artifacts
       - name: Upload WebGL Build
         uses: actions/upload-artifact@v4
         with:
