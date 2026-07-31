@@ -1,19 +1,26 @@
 name: Get Unity ALF File
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
 
 jobs:
-  activation:
+  generate-alf:
     name: Request manual activation file
     runs-on: ubuntu-latest
+    container:
+      image: unityci/editor:ubuntu-2022.3.0f1-webgl-3.0.0
     steps:
-      - name: Request manual activation file
-        id: getManualLicenseFile
-        uses: game-ci/unity-request-activation-file@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Expose as artifact
+      - name: Generate ALF
+        run: |
+          unity-editor -batchmode -createManualActivationFile -logfile /dev/stdout || true
+          mkdir -p .alf
+          cp *.alf .alf/ 2>/dev/null || cp *.ilf .alf/ 2>/dev/null || true
+
+      - name: Upload ALF Artifact
         uses: actions/upload-artifact@v4
         with:
           name: manual-activation-file
-          path: ${{ steps.getManualLicenseFile.outputs.filePath }}
+          path: .alf/
