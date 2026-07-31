@@ -10,17 +10,14 @@ jobs:
     container:
       image: unityci/editor:ubuntu-2022.3.0f1-webgl-3.0.0
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Generate ALF
+      - name: Create ALF Directory
         run: |
+          mkdir -p output_alf
           unity-editor -batchmode -createManualActivationFile -logfile /dev/stdout || true
-          mkdir -p .alf
-          cp *.alf .alf/ 2>/dev/null || cp *.ilf .alf/ 2>/dev/null || true
+          cp *.alf output_alf/ 2>/dev/null || cp *.ilf output_alf/ 2>/dev/null || true
 
       - name: Upload ALF Artifact
         uses: actions/upload-artifact@v4
         with:
           name: manual-activation-file
-          path: .alf/
+          path: output_alf/
