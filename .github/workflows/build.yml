@@ -1,0 +1,10 @@
+- name: Activate Unity License
+        uses: game-ci/unity-request-activation-file@v2
+        id: get-alf
+
+      - name: Request License File
+        uses: game-ci/unity-activate@v2
+        with:
+          unityUsername: ${{ secrets.UNITY_EMAIL }}
+          unityPassword: ${{ secrets.UNITY_PASSWORD }}
+          unityAuthenticatorKey: ${{ secrets.UNITY_AUTHENTICATOR_KEY }} # (Optional)
