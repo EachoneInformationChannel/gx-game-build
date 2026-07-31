@@ -8,3 +8,8 @@
           unityUsername: ${{ secrets.UNITY_EMAIL }}
           unityPassword: ${{ secrets.UNITY_PASSWORD }}
           unityAuthenticatorKey: ${{ secrets.UNITY_AUTHENTICATOR_KEY }} # (Optional)
+- name: Activate Unity
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
