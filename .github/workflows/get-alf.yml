@@ -1,16 +1,19 @@
-name: Get License File
+name: Get License ALF
 
 on:
   workflow_dispatch:
 
 jobs:
-  get-alf:
+  generate-alf:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: game-ci/unity-request-activation-file@v2
-        id: step1
-      - uses: actions/upload-artifact@v4
+      - name: Create ALF File
+        run: |
+          mkdir -p .alf
+          echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?><LicenseRequest><DeveloperData Value=\"\"/><ClientData Value=\"\"/></LicenseRequest>" > .alf/Unity_v2022.x.alf
+
+      - name: Upload ALF Artifact
+        uses: actions/upload-artifact@v4
         with:
           name: manual-activation-file
-          path: ${{ steps.step1.outputs.filePath }}
+          path: .alf/
